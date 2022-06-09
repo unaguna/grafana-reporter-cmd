@@ -41,7 +41,7 @@ It is intended to make complex configuration more intuitive by specializing in u
 
     Specify each argument as follows:
 
-    - **--template <template_name>**: Name of the template to be used. The contents of /reporter/templates/ can be used, and `landscape` and `portrait` are available by default.
+    - **--template <template_name>**: Name of the template to be used. The contents of `./reporter/templates/` can be used, and `landscape` and `portrait` are available by default.
     - **<dashboard_uid>**: UID of the dashboards you want to convert to PDF. For example: `OX1JIm97j`.
 
     The result PDF will be output under `./reporter/pdf-dest/`.
