@@ -38,7 +38,8 @@ It is intended to make complex configuration more intuitive by specializing in u
     ```shell
     # Standard
     docker-compose exec reporter gpdf --template landscape <dashboard_uid>
-
+    ```
+    ```shell
     # Specify dashboard variables (RecordID=1, Flg=0)
     # Refer to the right from '?' in the URL on dashboards
     docker-compose exec reporter gpdf --template landscape --url-query 'var-RecordID=1&var-Flg=0' <dashboard_uid>
