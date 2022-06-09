@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  reporter:
+    build: ./reporter/
+    volumes:
+      - ./reporter/templates:/root/templates
+      - ./reporter/pdf-dest:/root/pdf-dest
+      - ./reporter/scripts:/root/scripts
+      - ./reporter/local:/root/local
+    image: grafana-reporter-cmd
+    container_name: grafana-reporter-cmd
+    hostname: reporter
+    environment:
+      # The host and port of target Grafana server
+      GRAFANA_HOST: host.docker.internal:3000
+      # Path of the file that contains the api key to access Grafana
+      GRAFANA_KEY_PATH: /root/local/grafana.apikey
+      # Directory path where template files are stored
+      REPORTER_TEMPLATE_DIR: /root/templates
+      # Directory path where PDF files are output
+      REPORTER_DEST_DIR: /root/pdf-dest

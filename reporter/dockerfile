@@ -1,0 +1,6 @@
+FROM izakmarais/grafana-reporter
+
+RUN mkdir -p ~/local
+RUN chmod 700 ~/local
+
+RUN ln -s /root/scripts/gpdf.sh /usr/local/bin/gpdf

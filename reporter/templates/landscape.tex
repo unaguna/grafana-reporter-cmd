@@ -1,0 +1,22 @@
+% role model: https://github.com/IzakMarais/reporter/blob/master/report/texGridTemplate.go
+%use square brackets as golang text templating delimiters
+\documentclass[landscape,titlepage]{article}
+\usepackage{graphicx}
+\usepackage[margin=0.5in]{geometry}
+\graphicspath{ {images/} }
+\begin{document}
+\title{[[.Title]] [[if .VariableValues]] [[end]] [[if .Description]] \\ \small [[.Description]] [[end]]}
+\date{}
+\maketitle
+\begin{center}
+[[range .Panels]][[if .IsPartialWidth]]\begin{minipage}{[[.Width]]\textwidth}
+\includegraphics[width=\textwidth]{image[[.Id]]}
+\end{minipage}
+[[else]]\par
+\vspace{0.5cm}
+\includegraphics[width=\textwidth]{image[[.Id]]}
+\par
+\vspace{0.5cm}
+[[end]][[end]]
+\end{center}
+\end{document}
