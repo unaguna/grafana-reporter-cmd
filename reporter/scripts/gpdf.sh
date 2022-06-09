@@ -235,8 +235,6 @@ trap 'trap - EXIT; remove_tmpfile; exit -1' INT PIPE TERM
 grafana_api_key=$(cat "$GRAFANA_KEY_PATH")
 readonly grafana_api_key
 
-echo "$grafana_api_key"
-
 for dashboard_uid in "${dashboard_uid_list[@]}"; do
     grafana-reporter -cmd_enable -cmd_apiVersion v5 \
         -ip "$GRAFANA_HOST" \
