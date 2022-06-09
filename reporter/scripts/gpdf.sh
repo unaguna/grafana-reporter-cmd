@@ -75,7 +75,7 @@ readonly GPDF_APP_NAME_SHORTAGE
 ################################################################################
 
 function usage_exit () {
-    echo "Usage:" "$(basename "$0") --template <template_name> <dashboard_uid> [...]" 1>&2
+    echo "Usage:" "$(basename "$0") --template <template_name> [--url-query <query>] <dashboard_uid> [...]" 1>&2
     exit "$1"
 }
 
@@ -84,12 +84,17 @@ function echo_version() {
 }
 
 function echo_help () {
-    echo "Usage:" "$(basename "$0") --template <template_name> <dashboard_uid> [...]"
+    echo "Usage:" "$(basename "$0") --template <template_name> [--url-query <query>] <dashboard_uid> [...]"
     echo ""
     echo "Options"
     echo "    --template <template_name> :"
     echo "         (Required) Name of tex template to use. If specified,"
     echo "         \"\$REPORTER_TEMPLATE_DIR/<template_name>.tex\" is used as the template."
+    echo "    --url-query <query> :"
+    echo "         (Optional) A string given to the dashboard as a URL query. It can be"
+    echo "         used to pass dashboard variables. Refer to the right side of '?' in the"
+    echo "         URL of dashboards."
+    echo "         For example: from=now-1h&to=now&var-RecordID=1"
     echo ""
     echo "Arguments"
     echo "    <dashboard_uid> [...] :"
@@ -135,6 +140,7 @@ function echo_err() {
 declare -i argc=0
 declare -a argv=()
 template_name=
+url_query=
 version_flg=1
 help_flg=1
 invalid_option_flg=1
@@ -148,6 +154,9 @@ while (( $# > 0 )); do
         -*)
             if [[ "$1" == '--template' ]]; then
                 template_name="$2"
+                shift
+            elif [[ "$1" == '--url-query' ]]; then
+                url_query="$2"
                 shift
             elif [[ "$1" == "--version" ]]; then
                 version_flg=0
@@ -201,6 +210,8 @@ else
     readonly template_name
 fi
 
+readonly url_query
+
 
 ################################################################################
 # Validate arguments
@@ -243,6 +254,6 @@ for dashboard_uid in "${dashboard_uid_list[@]}"; do
         -cmd_dashboard "$dashboard_uid"  \
         -templates "$REPORTER_TEMPLATE_DIR" \
         -cmd_template "$template_name" \
-        -cmd_ts 'from=now-1M/M&to=now-1M/M' \
+        -cmd_ts "${url_query}&from=now-1M/M&to=now-1M/M" \
         -cmd_o "$REPORTER_DEST_DIR/$dashboard_uid.pdf"
 done

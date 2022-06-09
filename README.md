@@ -36,12 +36,19 @@ It is intended to make complex configuration more intuitive by specializing in u
 2. Run the wrapper script, `gpdf`, in the container. For example:
 
     ```shell
+    # Standard
     docker-compose exec reporter gpdf --template landscape <dashboard_uid>
+    ```
+    ```shell
+    # Specify dashboard variables (RecordID=1, Flg=0)
+    # Refer to the right from '?' in the URL on dashboards
+    docker-compose exec reporter gpdf --template landscape --url-query 'var-RecordID=1&var-Flg=0' <dashboard_uid>
     ```
 
     Specify each argument as follows:
 
     - **--template <template_name>**: Name of the template to be used. The contents of `./reporter/templates/` can be used, and `landscape` and `portrait` are available by default.
     - **<dashboard_uid>**: UID of the dashboards you want to convert to PDF. For example: `OX1JIm97j`.
+    - **--url-query \<query\>**: (Optional) A string given to the dashboard as a URL query. Refer to the right side of '?' in the URL on dashboards.
 
     The result PDF will be output under `./reporter/pdf-dest/`.
